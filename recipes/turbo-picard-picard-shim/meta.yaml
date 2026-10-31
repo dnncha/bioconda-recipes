@@ -1,19 +1,18 @@
 {% set name = "turbo-picard-picard-shim" %}
-{% set version = "0.1.15" %}
+{% set version = "0.1.18" %}
 
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/dnncha/turbo-picard/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 9903afb5a8a1846ab6d38340d695ebe9ed313cbda53f192f0cc0c63059fbb6b1
-
+  url: https://github.com/dnncha/turbo-picard/archive/refs/tags/v0.1.18.tar.gz
+  sha256: 5b087939898760692bc71c3880c7327212768fa56b241521679e26f24e5e71ac
 build:
   number: 0
-  skip: True  # [win]
+  skip: true  # [win]
   run_exports:
-    - {{ pin_subpackage(name, max_pin="x.x") }}
+    - {{ pin_subpackage('turbo-picard-picard-shim', max_pin="x.x") }}
 
 requirements:
   build:
@@ -33,8 +32,11 @@ requirements:
     - xz
   run:
     - turbo-picard =={{ version }}
+    - bzip2
     - curl
+    - libzlib
     - openssl
+    - xz
   run_constrained:
     - picard ==0
 
@@ -46,10 +48,9 @@ test:
 
 about:
   home: https://github.com/dnncha/turbo-picard
-  doc_url: https://turbo-picard.readthedocs.io
+  doc_url: https://turbo-picard.readthedocs.io/
   dev_url: https://github.com/dnncha/turbo-picard
   license: MIT
-  license_family: MIT
   license_file:
     - LICENSE
     - THIRDPARTY.yml
@@ -63,6 +64,3 @@ about:
 extra:
   recipe-maintainers:
     - dnncha
-  additional-platforms:
-    - linux-aarch64
-    - osx-arm64
